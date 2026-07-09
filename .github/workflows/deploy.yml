@@ -32,6 +32,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Enables GitHub Pages automatically if it isn't already (needs pages: write).
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       # `build` runs: ingest notes -> astro build (base=/Interview-Prep) -> pagefind index
       - name: Build site
         run: npm run build
