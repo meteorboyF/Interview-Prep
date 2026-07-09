@@ -1,0 +1,17 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# generated content (rebuilt from sources via `npm run ingest`)
+src/content/topics/
+src/data/generated/
+
+# logs & env
+*.log
+.env
+.env.production
+.DS_Store
+Thumbs.db

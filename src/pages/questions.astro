@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Flashcards from '../components/Flashcards.svelte';
+import questions from '../data/generated/questions.json';
+
+const conceptCount = questions.filter((q) => q.type === 'concept').length;
+const rapidCount = questions.filter((q) => q.type === 'rapid').length;
+---
+
+<BaseLayout title="Interview Flashcards" description="Quiz yourself with click-to-reveal interview questions and rapid-fire drills across DSA 1 & DSA 2.">
+  <div class="container page">
+    <header class="page-head">
+      <span class="tag">Active recall</span>
+      <h1>Interview Flashcards</h1>
+      <p class="lede">
+        {questions.length} questions ({conceptCount} conceptual · {rapidCount} rapid-fire) pulled
+        straight from the notes. Cover the answer, say it aloud as if teaching, then flip.
+      </p>
+    </header>
+    <Flashcards questions={questions} client:load />
+  </div>
+</BaseLayout>
+
+<style>
+  .page { padding: 2rem 0 2rem; }
+  .page-head { text-align: center; margin-bottom: 2rem; }
+  .page-head h1 { margin: 0.6rem 0 0.4rem; }
+  .lede { color: var(--text-soft); max-width: 40rem; margin: 0 auto; }
+</style>

@@ -1,0 +1,102 @@
+---
+/**
+ * Renders the interactive visualizer(s) associated with a topic.
+ * Each viz key maps to a Svelte island (hydrated lazily when scrolled into
+ * view). Titles/descriptions live here so topic pages stay declarative.
+ */
+import Sorting from './viz/SortingViz.svelte';
+import Searching from './viz/SearchingViz.svelte';
+import LinkedList from './viz/LinkedListViz.svelte';
+import StackViz from './viz/StackViz.svelte';
+import QueueViz from './viz/QueueViz.svelte';
+import GraphViz from './viz/GraphViz.svelte';
+import BSTViz from './viz/BSTViz.svelte';
+import MergeSortViz from './viz/MergeSortViz.svelte';
+import QuickSortViz from './viz/QuickSortViz.svelte';
+import FractionalKnapsackViz from './viz/FractionalKnapsackViz.svelte';
+import ActivitySelectionViz from './viz/ActivitySelectionViz.svelte';
+import MSTViz from './viz/MSTViz.svelte';
+import DijkstraViz from './viz/DijkstraViz.svelte';
+import Knapsack01Viz from './viz/Knapsack01Viz.svelte';
+import LCSViz from './viz/LCSViz.svelte';
+import MCMViz from './viz/MCMViz.svelte';
+import BellmanFordViz from './viz/BellmanFordViz.svelte';
+import KMPViz from './viz/KMPViz.svelte';
+
+interface Props {
+  keys: string[];
+}
+const { keys } = Astro.props;
+
+const META: Record<string, { title: string; desc: string }> = {
+  sorting: { title: 'Sorting Visualizer', desc: 'Watch selection, bubble, insertion, merge & quick sort rearrange the bars.' },
+  searching: { title: 'Search Visualizer', desc: 'Linear vs binary search — see the search window shrink.' },
+  linkedlist: { title: 'Linked List Visualizer', desc: 'Insert, delete and reverse nodes in singly & doubly linked lists.' },
+  stack: { title: 'Stack Visualizer', desc: 'LIFO push / pop animation.' },
+  queue: { title: 'Queue Visualizer', desc: 'FIFO enqueue / dequeue animation.' },
+  graph: { title: 'Graph Traversal Visualizer', desc: 'BFS, DFS and topological sort on an editable graph.' },
+  bst: { title: 'Binary Search Tree Visualizer', desc: 'Insert, search, delete and animate the four traversals.' },
+  mergesort: { title: 'Merge Sort Visualizer', desc: 'Divide-and-conquer split and merge phases.' },
+  quicksort: { title: 'Quick Sort Visualizer', desc: 'Pivot selection and partitioning, step by step.' },
+  'fractional-knapsack': { title: 'Fractional Knapsack Visualizer', desc: 'Greedy value/weight ratio selection.' },
+  'activity-selection': { title: 'Activity Selection Visualizer', desc: 'Greedy selection by earliest finish time.' },
+  mst: { title: 'MST Visualizer (Prim & Kruskal)', desc: 'Build a minimum spanning tree edge by edge.' },
+  dijkstra: { title: "Dijkstra's Shortest Path", desc: 'Relax edges and watch distances settle.' },
+  knapsack01: { title: '0/1 Knapsack DP Table', desc: 'Fill the DP table cell by cell.' },
+  lcs: { title: 'Longest Common Subsequence', desc: 'Fill the LCS DP table and trace back.' },
+  mcm: { title: 'Matrix Chain Multiplication', desc: 'Fill the cost table by chain length.' },
+  bellmanford: { title: 'Bellman-Ford', desc: 'Edge relaxation across V−1 rounds.' },
+  kmp: { title: 'KMP String Matcher', desc: 'Build the LPS array and slide the pattern.' },
+};
+
+const items = keys.filter((k) => META[k]);
+---
+
+{items.length > 0 && (
+  <section class="viz-section" id="visualizers" aria-label="Interactive visualizers">
+    <div class="viz-section-head">
+      <h2>▶ Interactive Visualizers</h2>
+      <p>Play the algorithms from this topic. Use the controls or keyboard: <kbd>Space</kbd> play/pause, <kbd>→</kbd> step, <kbd>R</kbd> reset.</p>
+    </div>
+    {items.map((key) => (
+      <figure class="viz-card card">
+        <figcaption>
+          <h3>{META[key].title}</h3>
+          <p>{META[key].desc}</p>
+        </figcaption>
+        {key === 'sorting' && <Sorting client:visible />}
+        {key === 'searching' && <Searching client:visible />}
+        {key === 'linkedlist' && <LinkedList client:visible />}
+        {key === 'stack' && <StackViz client:visible />}
+        {key === 'queue' && <QueueViz client:visible />}
+        {key === 'graph' && <GraphViz client:visible />}
+        {key === 'bst' && <BSTViz client:visible />}
+        {key === 'mergesort' && <MergeSortViz client:visible />}
+        {key === 'quicksort' && <QuickSortViz client:visible />}
+        {key === 'fractional-knapsack' && <FractionalKnapsackViz client:visible />}
+        {key === 'activity-selection' && <ActivitySelectionViz client:visible />}
+        {key === 'mst' && <MSTViz client:visible />}
+        {key === 'dijkstra' && <DijkstraViz client:visible />}
+        {key === 'knapsack01' && <Knapsack01Viz client:visible />}
+        {key === 'lcs' && <LCSViz client:visible />}
+        {key === 'mcm' && <MCMViz client:visible />}
+        {key === 'bellmanford' && <BellmanFordViz client:visible />}
+        {key === 'kmp' && <KMPViz client:visible />}
+      </figure>
+    ))}
+  </section>
+)}
+
+<style>
+  .viz-section { margin: 2.5rem 0; }
+  .viz-section-head h2 { margin-bottom: 0.3rem; }
+  .viz-section-head p { color: var(--text-soft); margin-top: 0; font-size: 0.92rem; }
+  .viz-card { padding: 1.2rem 1.3rem; margin: 1.2rem 0; }
+  .viz-card figcaption h3 { margin: 0 0 0.2rem; }
+  .viz-card figcaption p { margin: 0 0 1rem; color: var(--text-soft); font-size: 0.9rem; }
+  kbd {
+    font-family: var(--font-mono); font-size: 0.82em;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    border-bottom-width: 2px; border-radius: 5px; padding: 0.05em 0.35em;
+  }
+</style>

@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sorting from '../../components/viz/SortingViz.svelte';
+import Searching from '../../components/viz/SearchingViz.svelte';
+import LinkedList from '../../components/viz/LinkedListViz.svelte';
+import StackViz from '../../components/viz/StackViz.svelte';
+import QueueViz from '../../components/viz/QueueViz.svelte';
+import GraphViz from '../../components/viz/GraphViz.svelte';
+import BSTViz from '../../components/viz/BSTViz.svelte';
+import MergeSortViz from '../../components/viz/MergeSortViz.svelte';
+import QuickSortViz from '../../components/viz/QuickSortViz.svelte';
+import FractionalKnapsackViz from '../../components/viz/FractionalKnapsackViz.svelte';
+import ActivitySelectionViz from '../../components/viz/ActivitySelectionViz.svelte';
+import MSTViz from '../../components/viz/MSTViz.svelte';
+import DijkstraViz from '../../components/viz/DijkstraViz.svelte';
+import Knapsack01Viz from '../../components/viz/Knapsack01Viz.svelte';
+import LCSViz from '../../components/viz/LCSViz.svelte';
+import MCMViz from '../../components/viz/MCMViz.svelte';
+import BellmanFordViz from '../../components/viz/BellmanFordViz.svelte';
+import KMPViz from '../../components/viz/KMPViz.svelte';
+
+const groups = [
+  { id: 'sorting-searching', title: 'Sorting & Searching' },
+  { id: 'linear', title: 'Linear Structures' },
+  { id: 'trees-graphs', title: 'Trees & Graphs' },
+  { id: 'divide-conquer', title: 'Divide & Conquer' },
+  { id: 'greedy', title: 'Greedy Algorithms' },
+  { id: 'dp', title: 'Dynamic Programming' },
+  { id: 'strings', title: 'Strings' },
+];
+---
+
+<BaseLayout title="Visualizers" description="All interactive, animated algorithm visualizers in one place — sorting, graphs, trees, greedy, DP and string matching.">
+  <div class="container page">
+    <header class="page-head">
+      <span class="tag">Learn by watching</span>
+      <h1>Algorithm Visualizers</h1>
+      <p class="lede">Every visualizer in one place. Adjust the inputs, then use the controls or keyboard (<kbd>Space</kbd> / <kbd>→</kbd> / <kbd>R</kbd>) to step through.</p>
+      <nav class="jump" aria-label="Jump to category">
+        {groups.map((g) => <a href={`#${g.id}`}>{g.title}</a>)}
+      </nav>
+    </header>
+
+    <section id="sorting-searching" class="vgroup">
+      <h2>Sorting &amp; Searching</h2>
+      <figure class="viz-card card"><figcaption><h3>Sorting</h3></figcaption><Sorting client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Searching</h3></figcaption><Searching client:visible /></figure>
+    </section>
+
+    <section id="linear" class="vgroup">
+      <h2>Linear Structures</h2>
+      <figure class="viz-card card"><figcaption><h3>Linked List</h3></figcaption><LinkedList client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Stack (LIFO)</h3></figcaption><StackViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Queue (FIFO)</h3></figcaption><QueueViz client:visible /></figure>
+    </section>
+
+    <section id="trees-graphs" class="vgroup">
+      <h2>Trees &amp; Graphs</h2>
+      <figure class="viz-card card"><figcaption><h3>Binary Search Tree</h3></figcaption><BSTViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Graph Traversal (BFS / DFS / Topo)</h3></figcaption><GraphViz client:visible /></figure>
+    </section>
+
+    <section id="divide-conquer" class="vgroup">
+      <h2>Divide &amp; Conquer</h2>
+      <figure class="viz-card card"><figcaption><h3>Merge Sort</h3></figcaption><MergeSortViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Quick Sort</h3></figcaption><QuickSortViz client:visible /></figure>
+    </section>
+
+    <section id="greedy" class="vgroup">
+      <h2>Greedy Algorithms</h2>
+      <figure class="viz-card card"><figcaption><h3>Fractional Knapsack</h3></figcaption><FractionalKnapsackViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Activity Selection</h3></figcaption><ActivitySelectionViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Minimum Spanning Tree (Prim / Kruskal)</h3></figcaption><MSTViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Dijkstra's Shortest Path</h3></figcaption><DijkstraViz client:visible /></figure>
+    </section>
+
+    <section id="dp" class="vgroup">
+      <h2>Dynamic Programming</h2>
+      <figure class="viz-card card"><figcaption><h3>0/1 Knapsack</h3></figcaption><Knapsack01Viz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Longest Common Subsequence</h3></figcaption><LCSViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Matrix Chain Multiplication</h3></figcaption><MCMViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Bellman-Ford</h3></figcaption><BellmanFordViz client:visible /></figure>
+    </section>
+
+    <section id="strings" class="vgroup">
+      <h2>Strings</h2>
+      <figure class="viz-card card"><figcaption><h3>KMP String Matching</h3></figcaption><KMPViz client:visible /></figure>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .page { padding: 2rem 0 2rem; }
+  .page-head { text-align: center; margin-bottom: 2rem; }
+  .page-head h1 { margin: 0.6rem 0 0.4rem; }
+  .lede { color: var(--text-soft); max-width: 42rem; margin: 0 auto 1.2rem; }
+  .jump { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+  .jump a { font-size: 0.82rem; font-weight: 600; padding: 0.35rem 0.7rem; border-radius: 999px; background: var(--bg-soft); border: 1px solid var(--border-soft); color: var(--text-soft); }
+  .jump a:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+  .vgroup { margin-bottom: 2.5rem; scroll-margin-top: 5rem; }
+  .vgroup > h2 { border-bottom: 2px solid var(--border-soft); padding-bottom: 0.4rem; }
+  .viz-card { padding: 1.2rem 1.3rem; margin: 1.2rem 0; }
+  .viz-card figcaption h3 { margin: 0 0 1rem; }
+  kbd { font-family: var(--font-mono); font-size: 0.82em; background: var(--bg-soft); border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 5px; padding: 0.05em 0.35em; }
+</style>

@@ -1,0 +1,142 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import VizEmbed from '../../components/VizEmbed.astro';
+
+export async function getStaticPaths() {
+  const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.data.order);
+  return topics.map((entry, i) => ({
+    params: { slug: entry.data.slug },
+    props: { entry, prev: topics[i - 1] ?? null, next: topics[i + 1] ?? null },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (p: string) => `${base}/${p.replace(/^\//, '')}`;
+
+// Build a table of contents from h2/h3 headings.
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.summary}>
+  <div class="topic-layout container">
+    <article class="topic-main" data-pagefind-body>
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href={withBase('/topics')}>Topics</a>
+        <span>/</span>
+        <span class="crumb-course">{entry.data.course}</span>
+      </nav>
+
+      <header class="topic-header">
+        <span class="tag">{entry.data.course}</span>
+        <h1 data-pagefind-meta="title">{entry.data.title}</h1>
+        <p class="topic-summary">{entry.data.summary}</p>
+        <button id="mark-done" class="mark-done" type="button" aria-pressed="false">
+          <span class="check" aria-hidden="true">✓</span><span class="label">Mark as complete</span>
+        </button>
+      </header>
+
+      {entry.data.viz.length > 0 && <VizEmbed keys={entry.data.viz} />}
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <nav class="prevnext" aria-label="Topic navigation">
+        {prev ? (
+          <a class="pn card" href={withBase(`/topics/${prev.data.slug}`)}>
+            <span class="pn-dir">← Previous</span>
+            <span class="pn-title">{prev.data.title}</span>
+          </a>
+        ) : <span />}
+        {next ? (
+          <a class="pn card next" href={withBase(`/topics/${next.data.slug}`)}>
+            <span class="pn-dir">Next →</span>
+            <span class="pn-title">{next.data.title}</span>
+          </a>
+        ) : <span />}
+      </nav>
+    </article>
+
+    <aside class="topic-toc" aria-label="On this page">
+      <div class="toc-sticky">
+        {entry.data.viz.length > 0 && (
+          <a href="#visualizers" class="toc-viz">▶ Jump to visualizers</a>
+        )}
+        <div class="toc-title">On this page</div>
+        <ul class="toc-list">
+          {toc.map((h) => (
+            <li class={h.depth === 3 ? 'toc-sub' : ''}>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .topic-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 250px;
+    gap: 2.5rem;
+    padding: 2rem 1.25rem 1rem;
+    align-items: start;
+  }
+  .topic-main { min-width: 0; }
+  .crumbs { display: flex; gap: 0.5rem; font-size: 0.85rem; color: var(--text-faint); margin-bottom: 1rem; }
+  .crumb-course { color: var(--text-soft); }
+  .topic-header { margin-bottom: 1.5rem; }
+  .topic-header h1 { margin: 0.6rem 0 0.5rem; }
+  .topic-summary { color: var(--text-soft); font-size: 1.05rem; margin: 0 0 1rem; }
+  .mark-done {
+    display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    font: inherit; font-weight: 600; font-size: 0.88rem; padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text);
+  }
+  .mark-done .check { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); display: grid; place-items: center; font-size: 0.7rem; color: transparent; }
+  .mark-done.done { border-color: var(--success); color: var(--success); }
+  .mark-done.done .check { background: var(--success); border-color: var(--success); color: #fff; }
+
+  .prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 3rem; }
+  .pn { padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.2rem; color: var(--text); }
+  .pn:hover { text-decoration: none; border-color: var(--accent); }
+  .pn.next { text-align: right; }
+  .pn-dir { font-size: 0.78rem; color: var(--text-faint); font-weight: 600; }
+  .pn-title { font-weight: 700; }
+
+  .topic-toc { display: block; }
+  .toc-sticky { position: sticky; top: 5rem; max-height: calc(100vh - 6rem); overflow-y: auto; padding-bottom: 1rem; }
+  .toc-viz { display: block; font-size: 0.85rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 0.5rem 0.7rem; border-radius: 8px; margin-bottom: 1rem; }
+  .toc-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); font-weight: 700; margin-bottom: 0.6rem; }
+  .toc-list { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--border-soft); }
+  .toc-list li { margin: 0; }
+  .toc-list a { display: block; padding: 0.28rem 0 0.28rem 0.8rem; font-size: 0.85rem; color: var(--text-soft); border-left: 2px solid transparent; margin-left: -2px; }
+  .toc-list a:hover { color: var(--accent); text-decoration: none; }
+  .toc-list a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  .toc-sub a { padding-left: 1.6rem; font-size: 0.8rem; }
+
+  @media (max-width: 1000px) {
+    .topic-layout { grid-template-columns: 1fr; }
+    .topic-toc { display: none; }
+  }
+  @media (max-width: 560px) {
+    .prevnext { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  import { initTopicToggle } from '../../scripts/progress.ts';
+  import { initCodeCopy } from '../../scripts/enhance.ts';
+  import { initScrollSpy } from '../../scripts/scrollspy.ts';
+
+  const slug = document.querySelector<HTMLElement>('[data-slug-current]')?.dataset.slugCurrent;
+  initCodeCopy();
+  initScrollSpy();
+  // slug comes from the URL path
+  const parts = location.pathname.replace(/\/$/, '').split('/');
+  initTopicToggle(parts[parts.length - 1]);
+</script>

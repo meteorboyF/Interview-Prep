@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ComplexityTables from '../components/ComplexityTables.svelte';
+import complexity from '../data/generated/complexity.json';
+---
+
+<BaseLayout title="Complexity Reference" description="Sortable, filterable Big-O time & space complexity tables for every algorithm and data structure across DSA 1 & DSA 2.">
+  <div class="container page">
+    <header class="page-head">
+      <span class="tag">Master reference</span>
+      <h1>Time &amp; Space Complexity</h1>
+      <p class="lede">
+        Every algorithm and data structure across both courses, consolidated into
+        {complexity.length} sortable, filterable tables. Big-O values sort by growth rate.
+      </p>
+    </header>
+    <ComplexityTables tables={complexity} client:load />
+  </div>
+</BaseLayout>
+
+<style>
+  .page { padding: 2rem 0 2rem; max-width: 1000px; }
+  .page-head { margin-bottom: 1.5rem; }
+  .page-head h1 { margin: 0.6rem 0 0.4rem; }
+  .lede { color: var(--text-soft); max-width: 42rem; }
+</style>

@@ -1,0 +1,69 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Interactive DSA interview-prep: animated algorithm visualizers, faithful notes, complexity reference and flashcards.' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const fullTitle = title === 'DSA Prep' ? title : `${title} · DSA Prep`;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <title>{fullTitle}</title>
+    <meta name="color-scheme" content="light dark" />
+    <!-- Set theme before paint to avoid a flash of the wrong theme. -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (stored === 'dark' || (!stored && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>
+          <strong>DSA Prep</strong> — interactive study site built from UTA
+          interview-preparation notes (DSA 1 &amp; DSA 2).
+        </p>
+        <p class="footer-meta">
+          Notes rendered faithfully · algorithm code reviewed &amp; unmodified · © {year}
+        </p>
+      </div>
+    </footer>
+
+    <style>
+      .site-footer {
+        border-top: 1px solid var(--border-soft);
+        margin-top: 4rem;
+        padding: 2rem 0;
+        color: var(--text-soft);
+        font-size: 0.9rem;
+        background: var(--bg-soft);
+      }
+      .footer-inner { display: flex; flex-direction: column; gap: 0.3rem; }
+      .footer-meta { color: var(--text-faint); font-size: 0.82rem; margin: 0; }
+      main { min-height: 60vh; }
+    </style>
+  </body>
+</html>

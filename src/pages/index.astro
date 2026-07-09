@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import topics from '../data/generated/topics.json';
+import questions from '../data/generated/questions.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (p: string) => `${base}/${p.replace(/^\//, '')}`;
+
+const dsa1 = topics.filter((t) => t.course === 'DSA 1').sort((a, b) => a.order - b.order);
+const dsa2 = topics.filter((t) => t.course === 'DSA 2').sort((a, b) => a.order - b.order);
+const vizCount = topics.reduce((n, t) => n + t.viz.length, 0);
+
+const highlights = [
+  { icon: '▶', title: `${vizCount}+ animated visualizers`, body: 'Step through sorting, graph traversals, DP tables and more with play / pause / step controls.' },
+  { icon: '📚', title: '9 topic guides', body: 'Every note rendered faithfully — reviewed C/C++ code, worked examples, tips and Q&A, untouched.' },
+  { icon: '⚡', title: 'Complexity reference', body: 'Consolidated, sortable & filterable Big-O tables across both courses in one place.' },
+  { icon: '🃏', title: `${questions.length} flashcards`, body: 'Quiz yourself with click-to-reveal interview questions and rapid-fire drills.' },
+];
+---
+
+<BaseLayout title="DSA Prep">
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="tag">DSA 1 &amp; DSA 2 · UTA interview prep</span>
+      <h1>Learn data structures &amp; algorithms<br /><span class="grad">by watching them run.</span></h1>
+      <p class="lede">
+        A fast, static study companion built from carefully reviewed interview
+        notes — paired with interactive, animated visualizers so the algorithms
+        actually click.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href={withBase('/topics')}>Browse topics</a>
+        <a class="btn" href={withBase('/visualize')}>Open visualizers ▶</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="highlight-grid">
+      {highlights.map((h) => (
+        <div class="card highlight">
+          <span class="highlight-icon" aria-hidden="true">{h.icon}</span>
+          <h3>{h.title}</h3>
+          <p>{h.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container course-section">
+    <div class="course-head">
+      <h2>Course 1 · Foundations</h2>
+      <span class="course-badge dsa1">DSA 1</span>
+    </div>
+    <div class="topic-grid">
+      {dsa1.map((t) => (
+        <a class="card topic-card" href={withBase(`/topics/${t.slug}`)}>
+          <div class="topic-card-top">
+            <span class="topic-num">{String(t.order).padStart(2, '0')}</span>
+            {t.viz.length > 0 && <span class="viz-pill">▶ {t.viz.length} viz</span>}
+          </div>
+          <h3>{t.title}</h3>
+          <p>{t.summary}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container course-section">
+    <div class="course-head">
+      <h2>Course 2 · Advanced techniques</h2>
+      <span class="course-badge dsa2">DSA 2</span>
+    </div>
+    <div class="topic-grid">
+      {dsa2.map((t) => (
+        <a class="card topic-card" href={withBase(`/topics/${t.slug}`)}>
+          <div class="topic-card-top">
+            <span class="topic-num">{String(t.order).padStart(2, '0')}</span>
+            {t.viz.length > 0 && <span class="viz-pill">▶ {t.viz.length} viz</span>}
+          </div>
+          <h3>{t.title}</h3>
+          <p>{t.summary}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container whats-inside">
+    <div class="card inside-card">
+      <h2>What's inside</h2>
+      <ul>
+        <li><strong>Faithful notes</strong> — headings, tables, worked examples and reviewed C/C++ code, exactly as written.</li>
+        <li><strong>Inline visualizers</strong> — the relevant animation sits right next to each explanation.</li>
+        <li><strong>Complexity master reference</strong> — sortable, filterable Big-O tables for every algorithm.</li>
+        <li><strong>Flashcard mode</strong> — {questions.length} interview questions with click-to-reveal answers and rapid-fire drills.</li>
+        <li><strong>Progress tracking</strong> — mark topics done; your progress is saved in your browser.</li>
+        <li><strong>Full-text search</strong> — press <kbd>/</kbd> anywhere to search across all notes.</li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    background:
+      radial-gradient(1200px 500px at 50% -10%, var(--accent-soft), transparent 70%);
+    padding: 3.5rem 0 2rem;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .hero-inner { text-align: center; }
+  .hero h1 { margin: 1rem 0; letter-spacing: -0.02em; }
+  .grad {
+    background: linear-gradient(120deg, var(--accent), #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .lede {
+    max-width: 42rem;
+    margin: 0 auto;
+    font-size: 1.12rem;
+    color: var(--text-soft);
+  }
+  .hero-cta { display: flex; gap: 0.75rem; justify-content: center; margin-top: 1.6rem; flex-wrap: wrap; }
+
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: -1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  .highlight { padding: 1.3rem; }
+  .highlight-icon { font-size: 1.5rem; }
+  .highlight h3 { margin: 0.5rem 0 0.3rem; font-size: 1.05rem; }
+  .highlight p { margin: 0; color: var(--text-soft); font-size: 0.92rem; }
+
+  .course-section { margin-top: 3rem; }
+  .course-head { display: flex; align-items: center; gap: 0.8rem; }
+  .course-head h2 { margin: 0; }
+  .course-badge {
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em;
+    padding: 0.2rem 0.55rem; border-radius: 999px; color: #fff;
+  }
+  .course-badge.dsa1 { background: #4f46e5; }
+  .course-badge.dsa2 { background: #0891b2; }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+  .topic-card {
+    padding: 1.3rem;
+    color: var(--text);
+    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  }
+  .topic-card:hover { transform: translateY(-3px); text-decoration: none; border-color: var(--accent); }
+  .topic-card-top { display: flex; justify-content: space-between; align-items: center; }
+  .topic-num { font-family: var(--font-mono); color: var(--text-faint); font-weight: 700; }
+  .viz-pill {
+    font-size: 0.72rem; font-weight: 700; color: var(--accent);
+    background: var(--accent-soft); padding: 0.15rem 0.5rem; border-radius: 999px;
+  }
+  .topic-card h3 { margin: 0.6rem 0 0.4rem; font-size: 1.15rem; }
+  .topic-card p { margin: 0; color: var(--text-soft); font-size: 0.92rem; }
+
+  .whats-inside { margin-top: 3rem; }
+  .inside-card { padding: 1.6rem 1.8rem; }
+  .inside-card ul { margin: 1rem 0 0; padding-left: 1.2rem; }
+  .inside-card li { margin: 0.5rem 0; }
+  kbd {
+    font-family: var(--font-mono); font-size: 0.85em;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    border-bottom-width: 2px; border-radius: 5px; padding: 0.1em 0.4em;
+  }
+</style>
