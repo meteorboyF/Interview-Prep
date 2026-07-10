@@ -18,6 +18,16 @@ import LCSViz from '../../components/viz/LCSViz.svelte';
 import MCMViz from '../../components/viz/MCMViz.svelte';
 import BellmanFordViz from '../../components/viz/BellmanFordViz.svelte';
 import KMPViz from '../../components/viz/KMPViz.svelte';
+import DiodeIVViz from '../../components/viz/DiodeIVViz.svelte';
+import RectifierViz from '../../components/viz/RectifierViz.svelte';
+import ClipperViz from '../../components/viz/ClipperViz.svelte';
+import ClamperViz from '../../components/viz/ClamperViz.svelte';
+import SqlJoinViz from '../../components/viz/SqlJoinViz.svelte';
+import GroupByViz from '../../components/viz/GroupByViz.svelte';
+import BPlusTreeViz from '../../components/viz/BPlusTreeViz.svelte';
+import TransactionViz from '../../components/viz/TransactionViz.svelte';
+import RelationalAlgebraViz from '../../components/viz/RelationalAlgebraViz.svelte';
+import NormalizationViz from '../../components/viz/NormalizationViz.svelte';
 
 const groups = [
   { id: 'sorting-searching', title: 'Sorting & Searching' },
@@ -27,6 +37,8 @@ const groups = [
   { id: 'greedy', title: 'Greedy Algorithms' },
   { id: 'dp', title: 'Dynamic Programming' },
   { id: 'strings', title: 'Strings' },
+  { id: 'dbms', title: 'Databases (DBMS)' },
+  { id: 'electronics', title: 'Electronics' },
 ];
 ---
 
@@ -85,6 +97,24 @@ const groups = [
     <section id="strings" class="vgroup">
       <h2>Strings</h2>
       <figure class="viz-card card"><figcaption><h3>KMP String Matching</h3></figcaption><KMPViz client:visible /></figure>
+    </section>
+
+    <section id="dbms" class="vgroup">
+      <h2>Databases (DBMS)</h2>
+      <figure class="viz-card card"><figcaption><h3>SQL JOIN (inner / outer / cross)</h3></figcaption><SqlJoinViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>GROUP BY &amp; Aggregation</h3></figcaption><GroupByViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Relational Algebra (σ / π)</h3></figcaption><RelationalAlgebraViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Normalization (1NF → 3NF)</h3></figcaption><NormalizationViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>B-Tree Index</h3></figcaption><BPlusTreeViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Transaction Concurrency &amp; Anomalies</h3></figcaption><TransactionViz client:visible /></figure>
+    </section>
+
+    <section id="electronics" class="vgroup">
+      <h2>Electronics</h2>
+      <figure class="viz-card card"><figcaption><h3>Diode I-V Characteristic</h3></figcaption><DiodeIVViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Rectifiers (half / full / filtered)</h3></figcaption><RectifierViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Clipper Circuits</h3></figcaption><ClipperViz client:visible /></figure>
+      <figure class="viz-card card"><figcaption><h3>Clamper Circuits</h3></figcaption><ClamperViz client:visible /></figure>
     </section>
   </div>
 </BaseLayout>

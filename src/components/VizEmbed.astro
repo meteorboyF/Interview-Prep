@@ -22,6 +22,18 @@ import LCSViz from './viz/LCSViz.svelte';
 import MCMViz from './viz/MCMViz.svelte';
 import BellmanFordViz from './viz/BellmanFordViz.svelte';
 import KMPViz from './viz/KMPViz.svelte';
+// Electronics
+import DiodeIVViz from './viz/DiodeIVViz.svelte';
+import RectifierViz from './viz/RectifierViz.svelte';
+import ClipperViz from './viz/ClipperViz.svelte';
+import ClamperViz from './viz/ClamperViz.svelte';
+// DBMS
+import SqlJoinViz from './viz/SqlJoinViz.svelte';
+import GroupByViz from './viz/GroupByViz.svelte';
+import BPlusTreeViz from './viz/BPlusTreeViz.svelte';
+import TransactionViz from './viz/TransactionViz.svelte';
+import RelationalAlgebraViz from './viz/RelationalAlgebraViz.svelte';
+import NormalizationViz from './viz/NormalizationViz.svelte';
 
 interface Props {
   keys: string[];
@@ -47,6 +59,18 @@ const META: Record<string, { title: string; desc: string }> = {
   mcm: { title: 'Matrix Chain Multiplication', desc: 'Fill the cost table by chain length.' },
   bellmanford: { title: 'Bellman-Ford', desc: 'Edge relaxation across V−1 rounds.' },
   kmp: { title: 'KMP String Matcher', desc: 'Build the LPS array and slide the pattern.' },
+  // Electronics
+  'diode-iv': { title: 'Diode I-V Characteristic', desc: 'Sweep the applied voltage and watch the operating point move through each region.' },
+  rectifier: { title: 'Rectifier Visualizer', desc: 'Half-wave, full-wave bridge and capacitor-filtered output waveforms.' },
+  clipper: { title: 'Clipper Visualizer', desc: 'See how a clipper reshapes a waveform around a reference level.' },
+  clamper: { title: 'Clamper Visualizer', desc: 'Watch a clamper shift the DC level while preserving the shape.' },
+  // DBMS
+  'sql-join': { title: 'SQL JOIN Visualizer', desc: 'Step through INNER / LEFT / RIGHT / FULL / CROSS joins row by row.' },
+  'group-by': { title: 'GROUP BY & Aggregation', desc: 'Watch rows fall into groups as an aggregate accumulates.' },
+  bplustree: { title: 'B-Tree Index Visualizer', desc: 'Insert & search keys; see the multiway splits behind B+ tree indexes.' },
+  'transaction-schedule': { title: 'Transaction Concurrency', desc: 'Interleave two transactions and spot lost updates, dirty reads, and safe schedules.' },
+  'relational-algebra': { title: 'Relational Algebra Playground', desc: 'Apply selection σ and projection π to a live table.' },
+  normalization: { title: 'Normalization Stepper', desc: 'Walk a schema from unnormalized through 1NF, 2NF and 3NF.' },
 };
 
 const items = keys.filter((k) => META[k]);
@@ -82,6 +106,16 @@ const items = keys.filter((k) => META[k]);
         {key === 'mcm' && <MCMViz client:visible />}
         {key === 'bellmanford' && <BellmanFordViz client:visible />}
         {key === 'kmp' && <KMPViz client:visible />}
+        {key === 'diode-iv' && <DiodeIVViz client:visible />}
+        {key === 'rectifier' && <RectifierViz client:visible />}
+        {key === 'clipper' && <ClipperViz client:visible />}
+        {key === 'clamper' && <ClamperViz client:visible />}
+        {key === 'sql-join' && <SqlJoinViz client:visible />}
+        {key === 'group-by' && <GroupByViz client:visible />}
+        {key === 'bplustree' && <BPlusTreeViz client:visible />}
+        {key === 'transaction-schedule' && <TransactionViz client:visible />}
+        {key === 'relational-algebra' && <RelationalAlgebraViz client:visible />}
+        {key === 'normalization' && <NormalizationViz client:visible />}
       </figure>
     ))}
   </section>

@@ -9,6 +9,7 @@ const withBase = (p: string) => `${base}/${p.replace(/^\//, '')}`;
 const dsa1 = topics.filter((t) => t.course === 'DSA 1').sort((a, b) => a.order - b.order);
 const dsa2 = topics.filter((t) => t.course === 'DSA 2').sort((a, b) => a.order - b.order);
 const dbms = topics.filter((t) => t.course === 'DBMS').sort((a, b) => a.order - b.order);
+const electronics = topics.filter((t) => t.course === 'Electronics').sort((a, b) => a.order - b.order);
 const vizCount = topics.reduce((n, t) => n + t.viz.length, 0);
 
 const highlights = [
@@ -104,6 +105,25 @@ const highlights = [
     </div>
   </section>
 
+  <section class="container course-section">
+    <div class="course-head">
+      <h2>Electronics · Diodes &amp; Circuits</h2>
+      <span class="course-badge electronics">ELEC</span>
+    </div>
+    <div class="topic-grid">
+      {electronics.map((t) => (
+        <a class="card topic-card" href={withBase(`/topics/${t.slug}`)}>
+          <div class="topic-card-top">
+            <span class="topic-num">EL {String(t.order - 15).padStart(2, '0')}</span>
+            {t.viz.length > 0 && <span class="viz-pill">▶ {t.viz.length} viz</span>}
+          </div>
+          <h3>{t.title}</h3>
+          <p>{t.summary}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
   <section class="container whats-inside">
     <div class="card inside-card">
       <h2>What's inside</h2>
@@ -165,6 +185,7 @@ const highlights = [
   .course-badge.dsa1 { background: #4f46e5; }
   .course-badge.dsa2 { background: #0891b2; }
   .course-badge.dbms { background: #7c3aed; }
+  .course-badge.electronics { background: #ea580c; }
 
   .topic-grid {
     display: grid;
