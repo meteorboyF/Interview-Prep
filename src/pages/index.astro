@@ -8,25 +8,25 @@ const withBase = (p: string) => `${base}/${p.replace(/^\//, '')}`;
 
 const dsa1 = topics.filter((t) => t.course === 'DSA 1').sort((a, b) => a.order - b.order);
 const dsa2 = topics.filter((t) => t.course === 'DSA 2').sort((a, b) => a.order - b.order);
+const dbms = topics.filter((t) => t.course === 'DBMS').sort((a, b) => a.order - b.order);
 const vizCount = topics.reduce((n, t) => n + t.viz.length, 0);
 
 const highlights = [
   { icon: '▶', title: `${vizCount}+ animated visualizers`, body: 'Step through sorting, graph traversals, DP tables and more with play / pause / step controls.' },
-  { icon: '📚', title: '9 topic guides', body: 'Every note rendered faithfully — reviewed C/C++ code, worked examples, tips and Q&A, untouched.' },
-  { icon: '⚡', title: 'Complexity reference', body: 'Consolidated, sortable & filterable Big-O tables across both courses in one place.' },
+  { icon: '📚', title: `${topics.length} topic guides`, body: 'Structured DSA and DBMS notes with examples, pitfalls, explainers, and focused interview Q&A.' },
+  { icon: '⚡', title: 'Quick references', body: 'Sortable Big-O tables, SQL patterns, database design principles, and performance guidance.' },
   { icon: '🃏', title: `${questions.length} flashcards`, body: 'Quiz yourself with click-to-reveal interview questions and rapid-fire drills.' },
 ];
 ---
 
-<BaseLayout title="DSA Prep">
+<BaseLayout title="Interview Prep">
   <section class="hero">
     <div class="container hero-inner">
-      <span class="tag">DSA 1 &amp; DSA 2 · UTA interview prep</span>
-      <h1>Learn data structures &amp; algorithms<br /><span class="grad">by watching them run.</span></h1>
+      <span class="tag">DSA · DBMS · SQL · Interview prep</span>
+      <h1>Build interview-ready fundamentals<br /><span class="grad">one concept at a time.</span></h1>
       <p class="lede">
-        A fast, static study companion built from carefully reviewed interview
-        notes — paired with interactive, animated visualizers so the algorithms
-        actually click.
+        Comprehensive notes for data structures, algorithms, databases, and SQL—paired
+        with visual explainers, practical examples, and active-recall questions.
       </p>
       <div class="hero-cta">
         <a class="btn btn-primary" href={withBase('/topics')}>Browse topics</a>
@@ -68,6 +68,25 @@ const highlights = [
 
   <section class="container course-section">
     <div class="course-head">
+      <h2>Database Systems · Design to production</h2>
+      <span class="course-badge dbms">DBMS</span>
+    </div>
+    <div class="topic-grid">
+      {dbms.map((t) => (
+        <a class="card topic-card" href={withBase(`/topics/${t.slug}`)}>
+          <div class="topic-card-top">
+            <span class="topic-num">DB {String(t.order - 9).padStart(2, '0')}</span>
+            <span class="viz-pill">Q&amp;A</span>
+          </div>
+          <h3>{t.title}</h3>
+          <p>{t.summary}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container course-section">
+    <div class="course-head">
       <h2>Course 2 · Advanced techniques</h2>
       <span class="course-badge dsa2">DSA 2</span>
     </div>
@@ -89,7 +108,7 @@ const highlights = [
     <div class="card inside-card">
       <h2>What's inside</h2>
       <ul>
-        <li><strong>Faithful notes</strong> — headings, tables, worked examples and reviewed C/C++ code, exactly as written.</li>
+        <li><strong>Comprehensive notes</strong> — DSA, SQL, database design, indexing, transactions, and recovery.</li>
         <li><strong>Inline visualizers</strong> — the relevant animation sits right next to each explanation.</li>
         <li><strong>Complexity master reference</strong> — sortable, filterable Big-O tables for every algorithm.</li>
         <li><strong>Flashcard mode</strong> — {questions.length} interview questions with click-to-reveal answers and rapid-fire drills.</li>
@@ -145,6 +164,7 @@ const highlights = [
   }
   .course-badge.dsa1 { background: #4f46e5; }
   .course-badge.dsa2 { background: #0891b2; }
+  .course-badge.dbms { background: #7c3aed; }
 
   .topic-grid {
     display: grid;

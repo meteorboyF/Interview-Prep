@@ -1,8 +1,8 @@
 {
-  "name": "dsa-interview-prep",
+  "name": "interview-prep",
   "type": "module",
   "version": "1.0.0",
-  "description": "Interactive DSA interview-prep study site built from UTA notes",
+  "description": "Comprehensive DSA and DBMS interview-preparation study site",
   "scripts": {
     "ingest": "node scripts/ingest.mjs",
     "predev": "node scripts/ingest.mjs",

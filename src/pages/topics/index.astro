@@ -6,6 +6,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const withBase = (p: string) => `${base}/${p.replace(/^\//, '')}`;
 const dsa1 = topics.filter((t) => t.course === 'DSA 1').sort((a, b) => a.order - b.order);
 const dsa2 = topics.filter((t) => t.course === 'DSA 2').sort((a, b) => a.order - b.order);
+const dbms = topics.filter((t) => t.course === 'DBMS').sort((a, b) => a.order - b.order);
 ---
 
 <BaseLayout title="All Topics">
@@ -13,7 +14,7 @@ const dsa2 = topics.filter((t) => t.course === 'DSA 2').sort((a, b) => a.order -
     <header class="page-head">
       <span class="tag">Study guides</span>
       <h1>All Topics</h1>
-      <p class="lede">Nine faithfully rendered guides across DSA 1 &amp; DSA 2, each with inline interactive visualizers.</p>
+      <p class="lede">{topics.length} comprehensive guides across DSA and DBMS, with interactive visualizers and interview questions.</p>
     </header>
 
     <div class="progress-summary card" id="progress-summary" data-total={topics.length}>
@@ -22,7 +23,11 @@ const dsa2 = topics.filter((t) => t.course === 'DSA 2').sort((a, b) => a.order -
       <button class="btn" id="reset-progress" type="button">Reset</button>
     </div>
 
-    {[{ label: 'DSA 1 · Foundations', list: dsa1 }, { label: 'DSA 2 · Advanced', list: dsa2 }].map((group) => (
+    {[
+      { label: 'DSA 1 · Foundations', list: dsa1 },
+      { label: 'DSA 2 · Advanced Algorithms', list: dsa2 },
+      { label: 'DBMS · Databases & SQL', list: dbms },
+    ].map((group) => (
       <section class="course-section">
         <h2>{group.label}</h2>
         <div class="topic-list">

@@ -6,9 +6,9 @@ interface Props {
   title: string;
   description?: string;
 }
-const { title, description = 'Interactive DSA interview-prep: animated algorithm visualizers, faithful notes, complexity reference and flashcards.' } = Astro.props;
+const { title, description = 'Comprehensive interview preparation for DSA, DBMS, SQL, algorithms, database design, and system fundamentals.' } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const fullTitle = title === 'DSA Prep' ? title : `${title} · DSA Prep`;
+const fullTitle = title === 'Interview Prep' ? title : `${title} · Interview Prep`;
 const year = new Date().getFullYear();
 ---
 
@@ -43,11 +43,11 @@ const year = new Date().getFullYear();
     <footer class="site-footer">
       <div class="container footer-inner">
         <p>
-          <strong>DSA Prep</strong> — interactive study site built from UTA
-          interview-preparation notes (DSA 1 &amp; DSA 2).
+          <strong>Interview Prep</strong> — focused study guides for DSA, DBMS, SQL,
+          algorithms, and database systems.
         </p>
         <p class="footer-meta">
-          Notes rendered faithfully · algorithm code reviewed &amp; unmodified · © {year}
+          Comprehensive notes · interactive explainers · interview questions · © {year}
         </p>
       </div>
     </footer>

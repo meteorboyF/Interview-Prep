@@ -1,15 +1,15 @@
-# DSA Interview Prep — Interactive Study Site
+# Interview Prep — DSA & DBMS Study Site
 
-A fast, static study website built from UTA DSA 1 & DSA 2 interview-preparation
-notes, paired with **interactive, animated algorithm visualizers** so the
-algorithms actually click.
+A fast, static study website for DSA, DBMS, and SQL interview preparation,
+pairing comprehensive notes and active-recall questions with **interactive,
+animated algorithm visualizers**.
 
 **Live site:** https://meteorboyf.github.io/Interview-Prep
 
 ## Features
 
-- **Faithful topic guides** — all 9 topic documents rendered exactly as written
-  (headings, tables, worked examples, reviewed C/C++ code — unmodified).
+- **15 topic guides** — 9 DSA guides plus 6 comprehensive DBMS guides covering
+  modeling, normalization, SQL, joins, indexing, transactions, and recovery.
 - **18 interactive visualizers** with play / pause / step / reset / speed and
   keyboard shortcuts (`Space` play, `←`/`→` step, `R` reset):
   - Sorting (selection, bubble, insertion, merge, quick) & searching (linear, binary)
@@ -19,7 +19,7 @@ algorithms actually click.
   - DP tables: 0/1 knapsack, LCS (+ traceback), matrix-chain, Bellman-Ford
   - KMP string matching with the LPS array
 - **Complexity reference** — sortable/filterable Big-O tables (sorts by growth rate).
-- **Flashcards** — 159 click-to-reveal interview questions + rapid-fire drills.
+- **Flashcards** — click-to-reveal DSA and DBMS interview questions plus rapid-fire drills.
 - **Extras** — full-text search (press `/`), dark/light mode, per-topic progress
   tracking (localStorage), copy-to-clipboard code buttons, sticky table of contents.
 
@@ -33,10 +33,10 @@ algorithms actually click.
 ## Project structure
 
 ```
-DSA 1/ , DSA 2/            # source notes (markdown) — the single source of truth
+DSA 1/ , DSA 2/ , DBMS/    # source notes and supplied DBMS reference documents
 scripts/ingest.mjs         # parses notes -> clean content + JSON data
 src/
-  content/topics/          # generated topic markdown (gitignored, rebuilt on build)
+  content/topics/          # generated DSA + DBMS topic markdown (rebuilt on build)
   data/generated/          # generated JSON: topics, questions, complexity (gitignored)
   components/viz/           # the 18 Svelte visualizers + shared Player engine
   lib/algos/               # pure TS frame-generators (sorting, graph, bst, dp, weighted)
