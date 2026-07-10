@@ -195,6 +195,73 @@ Analogy: imagine three people searching for a name. Person A checks every page o
 | Naive recursive Fibonacci | O(2^n) time, exponential | O(n) time with a simple loop |
 | Memoised recursive Fibonacci | O(n) time, O(n) space | Same as iterative with a DP array |
 
+## **2.5 Best, Average, and Worst Case Examples**
+
+The input example is as important as the notation in an interview: state the complexity, then name the condition that causes it. When an algorithm always performs the same asymptotic amount of work, all three cases are identical.
+
+### **Sorting and Searching**
+
+| Algorithm | Best case: time and example | Average case: time and example | Worst case: time and example | Auxiliary space |
+| :---- | :---- | :---- | :---- | :---- |
+| Selection Sort | O(n^2), any input; it still scans the entire unsorted suffix | O(n^2), randomly ordered input | O(n^2), any input; comparisons do not decrease | O(1) |
+| Bubble Sort (optimised) | O(n), already sorted input; the first pass makes no swaps | O(n^2), randomly ordered input | O(n^2), reverse-sorted input; nearly every comparison swaps | O(1) |
+| Insertion Sort | O(n), already sorted input; each key needs one comparison | O(n^2), randomly ordered input | O(n^2), reverse-sorted input; every key shifts across the sorted prefix | O(1) |
+| Merge Sort | O(n log n), any input; every level still merges all n items | O(n log n), randomly ordered input | O(n log n), any input; input order does not change the recursion tree | O(n) |
+| Quick Sort | O(n log n), each pivot divides the array into near-equal halves | O(n log n), pivots are reasonably balanced on typical random input | O(n^2), each pivot is the smallest or largest item, such as sorted input with a last-element pivot | O(log n) average, O(n) worst recursion stack |
+| Linear Search | O(1), target is the first item | O(n), target is typically around the middle | O(n), target is last or absent | O(1) |
+| Sentinel Linear Search | O(1), target is the first item | O(n), target is around the middle | O(n), target is last or absent | O(1) |
+| Binary Search | O(1), target is the middle item | O(log n), target is found after several halvings | O(log n), target is absent or found at the deepest level | O(1) iterative, O(log n) recursive |
+
+### **Linear Data Structures**
+
+| Algorithm / operation | Best case: time and example | Average case: time and example | Worst case: time and example | Auxiliary space |
+| :---- | :---- | :---- | :---- | :---- |
+| Linked List Search | O(1), target is at the head | O(n), target is around the middle | O(n), target is at the tail or absent | O(1) |
+| Linked List Insert by Position | O(1), insert at the head | O(n), position is around the middle | O(n), insert at the tail without a tail pointer | O(1) |
+| Linked List Delete by Value | O(1), target is at the head | O(n), target is around the middle | O(n), target is at the tail or absent | O(1) |
+| Linked List Reverse | O(n), any n-node list | O(n), any n-node list | O(n), every pointer must be reversed | O(1) iterative, O(n) recursive |
+| Floyd's Cycle Detection | O(1), the head immediately participates in a self-loop | O(n), pointers meet after traversing part of the list | O(n), no cycle or the meeting point is reached only after many steps | O(1) |
+| Stack Push / Pop / Peek | O(1), any valid operation | O(1), any valid operation | O(1), fixed work regardless of stack size | O(1) per operation |
+| Queue Enqueue / Dequeue (circular or linked) | O(1), any valid operation | O(1), any valid operation | O(1), fixed pointer or index updates | O(1) per operation |
+| Queue Dequeue (naive shifting array) | O(1), queue contains at most one item | O(n), remaining items are shifted | O(n), dequeue from a full n-item queue | O(1) |
+
+### **Trees, Graphs, and Sets**
+
+| Algorithm / operation | Best case: time and example | Average case: time and example | Worst case: time and example | Auxiliary space |
+| :---- | :---- | :---- | :---- | :---- |
+| BST Search | O(1), target is at the root | O(log n), tree is reasonably balanced | O(n), tree is skewed and target is deepest or absent | O(1) iterative, O(h) recursive |
+| BST Insert | O(1), inserting into an empty tree | O(log n), tree is reasonably balanced | O(n), inserting into a skewed tree | O(1) iterative, O(h) recursive |
+| BST Delete | O(1), root or located node needs no traversal and has at most one child | O(log n), target is in a balanced tree | O(n), target is deep in a skewed tree or deleting a node requires finding a deep successor | O(1) iterative, O(h) recursive |
+| Tree Traversal (DFS) | O(n), any n-node tree | O(n), any n-node tree | O(n), every node must be visited | O(h), up to O(n) for a skewed tree |
+| Breadth-First Search | O(V + E), full traversal of any represented graph | O(V + E), full traversal of a typical graph | O(V + E), all reachable vertices and edges are examined | O(V) |
+| Depth-First Search | O(V + E), full traversal of any represented graph | O(V + E), full traversal of a typical graph | O(V + E), all reachable vertices and edges are examined | O(V) |
+| Topological Sort | O(V + E), any DAG | O(V + E), any DAG | O(V + E), every vertex and edge must be processed | O(V) |
+| Hash Set Search / Insert | O(1), direct bucket access with no collision | O(1), a well-distributed hash function and controlled load factor | O(n), all keys collide into one bucket | O(n) table storage |
+| Set Union / Intersection | O(n + m), empty or disjoint inputs still require processing the inputs | O(n + m), typical sets | O(n + m), every element must be considered | O(n + m) for the result |
+
+### **Divide and Conquer, Greedy, Dynamic Programming, and Strings**
+
+| Algorithm | Best case: time and example | Average case: time and example | Worst case: time and example | Auxiliary space |
+| :---- | :---- | :---- | :---- | :---- |
+| Maximum Subarray (D&C) | O(n log n), any input; both halves and crossing sums are evaluated | O(n log n), mixed positive and negative values | O(n log n), any input; value arrangement does not prune work | O(log n) |
+| Kadane's Algorithm | O(n), any input; every element is examined once | O(n), mixed values | O(n), any input; every element is still examined | O(1) |
+| Fractional Knapsack | O(n log n), items already ordered by ratio when a general comparison sort is still run | O(n log n), randomly ordered ratios | O(n log n), reverse ratio order; sorting dominates | O(1) extra excluding sort implementation |
+| Activity Selection | O(n log n), activities already ordered by finish time when sorting is still run | O(n log n), randomly ordered activities | O(n log n), reverse finish-time order; sorting dominates | O(1) extra excluding sort implementation |
+| Prim's (matrix) | O(V^2), any connected weighted graph | O(V^2), typical graph | O(V^2), matrix scanning is independent of edge arrangement | O(V) |
+| Prim's (min-heap) | O(E log V), sparse connected graph under the standard bound | O(E log V), typical adjacency-list graph | O(E log V), many edge relaxations and heap updates | O(V + E) |
+| Kruskal's Algorithm | O(E log E), edges already ordered when a general sort is still run | O(E log E), randomly ordered edges | O(E log E), reverse-ordered edges; sorting dominates | O(V + E) |
+| Dijkstra's (matrix) | O(V^2), any non-negative weighted graph | O(V^2), typical graph | O(V^2), matrix scanning is independent of weights | O(V) |
+| Dijkstra's (min-heap) | O((V + E) log V), sparse graph with few successful relaxations | O((V + E) log V), typical graph | O((V + E) log V), many successful relaxations create heap entries | O(V + E) |
+| Bellman-Ford | O(E), an implementation with early exit on a graph needing one relaxation pass | O(VE), paths propagate across several passes | O(VE), shortest paths require all V-1 passes, such as edges presented in an unfavourable order | O(V) |
+| 0/1 Knapsack DP | O(nW), any values and weights for n items and capacity W | O(nW), typical input | O(nW), all table states are filled regardless of values | O(nW), reducible to O(W) |
+| Longest Common Subsequence DP | O(nm), any two strings of lengths n and m | O(nm), partially matching strings | O(nm), matching pattern does not change the table size | O(nm), reducible to O(min(n,m)) for length only |
+| Matrix Chain Multiplication DP | O(n^3), any chain of n matrices | O(n^3), typical dimensions | O(n^3), every split for every interval is tested | O(n^2) |
+| KMP String Matching | O(n + m), match begins immediately after the O(m) LPS build | O(n + m), typical text and pattern | O(n + m), many partial matches, such as repeated prefixes; KMP never moves the text pointer backward | O(m) |
+| Travelling Salesman (brute force) | O(n!), any n-city cost matrix | O(n!), typical costs | O(n!), every tour is enumerated without pruning | O(n) recursion/path storage |
+| Travelling Salesman (Held-Karp DP) | O(n^2 2^n), any n-city cost matrix | O(n^2 2^n), typical costs | O(n^2 2^n), all subset-and-endpoint states are evaluated | O(n 2^n) |
+| Naive Recursive Fibonacci | O(2^n), any requested n under the standard loose bound | O(2^n), any requested n | O(2^n), recursion repeatedly recomputes the same subproblems | O(n) recursion stack |
+| Memoised Fibonacci | O(n), any requested n | O(n), any requested n | O(n), each value from 0 through n is computed once | O(n) |
+
 # **Part 3: Master Summary and Interview Notes**
 
 ## **3.1 Every algorithm in this syllabus, ranked by typical time complexity**
