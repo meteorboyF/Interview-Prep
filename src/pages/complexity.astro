@@ -2,6 +2,41 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ComplexityTables from '../components/ComplexityTables.svelte';
 import complexity from '../data/generated/complexity.json';
+
+const interviewQuestions = [
+  {
+    q: 'What is the difference between time complexity and space complexity?',
+    a: 'Time complexity describes how the number of operations grows as the input grows. Space complexity describes how much memory an algorithm needs, including auxiliary data structures and, when relevant, the recursion stack.',
+  },
+  {
+    q: 'Why do we use Big-O instead of measuring execution time in seconds?',
+    a: 'Seconds depend on the machine, language, compiler, and input. Big-O describes the growth trend, so algorithms can be compared independently of the environment.',
+  },
+  {
+    q: 'What are best-case, average-case, and worst-case complexity?',
+    a: 'They describe the minimum, expected, and maximum work for inputs of the same size. Unless stated otherwise, interviewers usually expect the worst-case bound, plus the average case when it is notably different.',
+  },
+  {
+    q: 'What is auxiliary space, and how is it different from total space?',
+    a: 'Auxiliary space is the extra memory used by the algorithm, excluding the input itself. Total space includes both the input storage and that extra memory.',
+  },
+  {
+    q: 'What is the time and space complexity of binary search?',
+    a: 'Binary search takes O(log n) time. The iterative version uses O(1) auxiliary space; a recursive version uses O(log n) stack space.',
+  },
+  {
+    q: 'Why are two consecutive O(n) loops still O(n), while nested loops are often O(n²)?',
+    a: 'Consecutive loops add: O(n + n) = O(2n), and constants are dropped, leaving O(n). Nested loops multiply when each inner loop runs n times for every outer iteration: O(n × n) = O(n²).',
+  },
+  {
+    q: 'Can an algorithm trade space for time?',
+    a: 'Yes. A hash table or memoization may use O(n) extra space to avoid repeated searches or calculations, often reducing an O(n²) or exponential solution to a faster one.',
+  },
+  {
+    q: 'What is amortized complexity?',
+    a: 'It averages the cost of an operation over a sequence of operations. For example, appending to a dynamic array is O(1) amortized even though an occasional resize costs O(n).',
+  },
+];
 ---
 
 <BaseLayout title="Complexity Reference" description="Sortable, filterable Big-O time & space complexity tables for every algorithm and data structure across DSA 1 & DSA 2.">
@@ -14,7 +49,89 @@ import complexity from '../data/generated/complexity.json';
         {complexity.length} sortable, filterable tables. Big-O values sort by growth rate.
       </p>
     </header>
+
+    <section class="complexity-guide" aria-labelledby="complexity-basics">
+      <div class="section-head">
+        <span class="tag">Start here</span>
+        <h2 id="complexity-basics">What do time and space complexity mean?</h2>
+        <p>
+          Complexity describes how an algorithm's resource usage grows when its input size,
+          usually written as <code>n</code>, becomes larger. It measures growth—not an exact
+          number of seconds or bytes.
+        </p>
+      </div>
+
+      <div class="concept-grid">
+        <article class="card concept-card">
+          <span class="concept-icon" aria-hidden="true">⏱</span>
+          <h3>Time complexity</h3>
+          <p>
+            Time complexity estimates how the number of basic operations grows. A linear
+            search may inspect every item, so it is <code>O(n)</code>. Binary search halves
+            the remaining range each step, so it is <code>O(log n)</code>.
+          </p>
+        </article>
+        <article class="card concept-card">
+          <span class="concept-icon" aria-hidden="true">▦</span>
+          <h3>Space complexity</h3>
+          <p>
+            Space complexity estimates memory growth. It includes temporary arrays, maps,
+            objects, and recursion-stack frames. An in-place loop may use <code>O(1)</code>
+            auxiliary space, while copying an input of size <code>n</code> uses <code>O(n)</code>.
+          </p>
+        </article>
+      </div>
+
+      <div class="card big-o-card">
+        <div>
+          <h3>How to read Big-O</h3>
+          <p>Keep the fastest-growing term and ignore constant factors as <code>n</code> grows.</p>
+        </div>
+        <div class="examples" aria-label="Big-O simplification examples">
+          <code>3n + 10 → O(n)</code>
+          <code>n² + 4n → O(n²)</code>
+          <code>5 → O(1)</code>
+        </div>
+      </div>
+
+      <div class="growth-order">
+        <h3>Common growth rates, best to worst</h3>
+        <ol>
+          <li><code>O(1)</code><span>constant</span></li>
+          <li><code>O(log n)</code><span>logarithmic</span></li>
+          <li><code>O(n)</code><span>linear</span></li>
+          <li><code>O(n log n)</code><span>linearithmic</span></li>
+          <li><code>O(n²)</code><span>quadratic</span></li>
+          <li><code>O(2ⁿ)</code><span>exponential</span></li>
+          <li><code>O(n!)</code><span>factorial</span></li>
+        </ol>
+      </div>
+
+      <section class="interview" aria-labelledby="complexity-interview">
+        <div class="section-head">
+          <span class="tag">Test yourself</span>
+          <h2 id="complexity-interview">Complexity interview questions</h2>
+          <p>Answer each question aloud, then expand it to check your explanation.</p>
+        </div>
+        <div class="question-list">
+          {interviewQuestions.map((item, i) => (
+            <details class="card question">
+              <summary><span>{String(i + 1).padStart(2, '0')}</span>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    </section>
+
+    <section class="reference" aria-labelledby="complexity-reference">
+      <div class="section-head">
+        <span class="tag">Look it up</span>
+        <h2 id="complexity-reference">Algorithm complexity reference</h2>
+        <p>Filter the tables or select a column heading to compare growth rates.</p>
+      </div>
     <ComplexityTables tables={complexity} client:load />
+    </section>
   </div>
 </BaseLayout>
 
@@ -23,4 +140,39 @@ import complexity from '../data/generated/complexity.json';
   .page-head { margin-bottom: 1.5rem; }
   .page-head h1 { margin: 0.6rem 0 0.4rem; }
   .lede { color: var(--text-soft); max-width: 42rem; }
+  .complexity-guide { margin: 2.5rem 0 3.5rem; }
+  .section-head { margin-bottom: 1.2rem; }
+  .section-head h2 { margin: 0.55rem 0 0.35rem; }
+  .section-head p { color: var(--text-soft); max-width: 46rem; margin: 0; }
+  .concept-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .concept-card { padding: 1.4rem; }
+  .concept-card h3 { margin: 0.5rem 0; }
+  .concept-card p { color: var(--text-soft); margin: 0; }
+  .concept-icon { font-size: 1.6rem; color: var(--accent); }
+  code { font-family: var(--font-mono); color: var(--accent); font-size: 0.92em; }
+  .big-o-card { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; padding: 1.3rem 1.4rem; margin-top: 1rem; }
+  .big-o-card h3, .big-o-card p { margin: 0; }
+  .big-o-card p { color: var(--text-soft); margin-top: 0.25rem; }
+  .examples { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: flex-end; }
+  .examples code { background: var(--accent-soft); border-radius: 6px; padding: 0.4rem 0.6rem; white-space: nowrap; }
+  .growth-order { margin-top: 1.5rem; }
+  .growth-order ol { display: grid; grid-template-columns: repeat(7, 1fr); list-style: none; padding: 0; margin: 0; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .growth-order li { display: flex; flex-direction: column; gap: 0.2rem; padding: 0.75rem 0.5rem; text-align: center; background: var(--bg-elevated); border-right: 1px solid var(--border-soft); }
+  .growth-order li:last-child { border-right: 0; }
+  .growth-order span { color: var(--text-faint); font-size: 0.72rem; }
+  .interview { margin-top: 3rem; }
+  .question-list { display: grid; gap: 0.65rem; }
+  .question { padding: 0; overflow: hidden; }
+  .question summary { display: flex; gap: 0.8rem; align-items: baseline; padding: 1rem 1.1rem; cursor: pointer; font-weight: 650; }
+  .question summary:hover { background: var(--bg-soft); }
+  .question summary span { color: var(--accent); font-family: var(--font-mono); font-size: 0.78rem; }
+  .question p { color: var(--text-soft); margin: 0; padding: 0 1.1rem 1rem 2.9rem; }
+  .reference { scroll-margin-top: 5rem; }
+  @media (max-width: 760px) {
+    .concept-grid { grid-template-columns: 1fr; }
+    .big-o-card { align-items: flex-start; flex-direction: column; }
+    .examples { justify-content: flex-start; }
+    .growth-order ol { grid-template-columns: repeat(2, 1fr); }
+    .growth-order li { border-bottom: 1px solid var(--border-soft); }
+  }
 </style>
