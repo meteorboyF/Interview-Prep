@@ -266,16 +266,27 @@ The input example is as important as the notation in an interview: state the com
 
 ## **3.1 Every algorithm in this syllabus, ranked by typical time complexity**
 
-| Complexity | Algorithms from DSA 1 & DSA 2 |
-| :---- | :---- |
-| O(1) | Stack/Queue push-pop-front-back, hash map/set average insert-search, array index access |
-| O(log n) | Binary search, BST search/insert/delete (balanced case) |
-| O(n) | Linear search, linked list traversal/search, BFS/DFS (in terms of V, technically O(V+E)), Kadane's Algorithm, tree traversals |
-| O(n log n) | Merge sort, quick sort (avg/best), Divide and Conquer max subarray, Fractional Knapsack, Activity Selection, Kruskal's (as O(E log E)) |
-| O(n^2) | Selection sort, bubble sort, insertion sort (worst/avg), quick sort (worst case), Prim's/Dijkstra's with adjacency matrix (in terms of V) |
-| O(2^n) | Naive recursive Fibonacci (the classic example of when NOT to use plain recursion) |
+| Complexity | Algorithms from DSA 1 & DSA 2 | Why this class |
+| :---- | :---- | :---- |
+| O(1) | Stack/Queue push-pop-front-back, hash map/set average insert-search, array index access | A fixed number of steps that does not grow with n: a direct index, pointer update, or hash computation reaches the target without scanning anything. |
+| O(log n) | Binary search, BST search/insert/delete (balanced case) | Each step throws away a constant fraction (about half) of what remains, so only ~log2(n) steps are needed to shrink n down to 1. |
+| O(n) | Linear search, linked list traversal/search, BFS/DFS (in terms of V, technically O(V+E)), Kadane's Algorithm, tree traversals | Every element (or every vertex and edge) is visited a constant number of times in a single pass, so work grows in direct proportion to the input size. |
+| O(n log n) | Merge sort, quick sort (avg/best), Divide and Conquer max subarray, Fractional Knapsack, Activity Selection, Kruskal's (as O(E log E)) | O(n) work is done at each of the ~log n levels of a halving divide-and-conquer (or one dominating comparison sort), giving n multiplied by log n. |
+| O(n^2) | Selection sort, bubble sort, insertion sort (worst/avg), quick sort (worst case), Prim's/Dijkstra's with adjacency matrix (in terms of V) | Two nested loops each run ~n times, so nearly every element is compared or shifted against every other: n multiplied by n operations. |
+| O(2^n) | Naive recursive Fibonacci (the classic example of when NOT to use plain recursion) | The recursion branches into ~2 subproblems at each of n levels with no reuse of results, so the call tree doubles every level: 2^n total calls. |
 
-## **3.2 How to answer "what is the time complexity" in an interview**
+## **3.2 Every algorithm in this syllabus, ranked by typical space complexity**
+
+*Space here means auxiliary (extra) memory beyond the input itself; recursion counts its call-stack depth.*
+
+| Complexity | Where it shows up (DSA 1 & DSA 2) | Why this much memory |
+| :---- | :---- | :---- |
+| O(1) | Selection/bubble/insertion sort, iterative binary search, linked list traversal/reverse, Kadane's Algorithm, stack/queue operations | Uses only a fixed set of variables (a few indices or pointers) and rearranges or scans the existing data in place, allocating nothing that grows with n. |
+| O(log n) | Recursive binary search, quick sort (average recursion depth), balanced BST recursive operations | The extra memory is the recursion call stack, and a balanced halving divide is only about log2(n) frames deep at any one moment. |
+| O(n) | Merge sort (merge buffer), BFS/DFS (visited array plus the queue/stack), hash map/set, memoised Fibonacci, adjacency list O(V+E), 1-D DP arrays, recursion on a skewed tree or linked list | Allocates one auxiliary structure - an array, queue, hash table, memo/DP table, or a recursion stack - whose size grows in direct proportion to the input. |
+| O(n^2) | 0/1 Knapsack, LCS and Matrix-Chain DP tables, graph adjacency matrix (O(V^2)) | Stores a value for every pair of indices: an n by n grid of subproblems (or a slot for every possible vertex-to-vertex edge). |
+
+## **3.3 How to answer "what is the time complexity" in an interview**
 
 * 1\. State which case you are giving (best, average, or worst), do not just say a bare complexity without qualifying it if it varies.
 
@@ -285,7 +296,7 @@ The input example is as important as the notation in an interview: state the com
 
 * 4\. If relevant, mention the trade-off against an alternative algorithm (for example, "O(n^2) worst case for quicksort, but faster in practice than merge sort's guaranteed O(n log n) due to cache locality").
 
-## **3.3 Common mistakes to avoid**
+## **3.4 Common mistakes to avoid**
 
 * Confusing average case with worst case, always specify which one you mean, especially for quicksort and hash-based structures.
 
@@ -295,7 +306,7 @@ The input example is as important as the notation in an interview: state the com
 
 * Forgetting recursion's hidden O(depth) space cost, an algorithm can look O(1) extra space in the code but still carry O(n) recursion stack space.
 
-## **3.4 Final checklist before the interview**
+## **3.5 Final checklist before the interview**
 
 * Can you state the best/average/worst time and space complexity for every algorithm across DSA 1 and DSA 2 without hesitation?
 

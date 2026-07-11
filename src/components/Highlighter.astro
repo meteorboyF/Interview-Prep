@@ -1,0 +1,93 @@
+---
+// Floating highlighter toolbar. Rendered on every page via BaseLayout.
+const colors = [
+  { key: 'yellow', label: 'Yellow' },
+  { key: 'green', label: 'Green' },
+  { key: 'pink', label: 'Pink' },
+  { key: 'blue', label: 'Blue' },
+];
+---
+
+<div id="hl-toolbar" class="hl-toolbar" data-hl-skip>
+  <div id="hl-menu" class="hl-menu" hidden>
+    <span class="hl-menu-title">Highlighter</span>
+    <div class="hl-swatches">
+      {colors.map((c) => (
+        <button class="hl-color" data-color={c.key} title={`Highlight ${c.label}`} aria-label={`Highlight ${c.label}`}>
+          <span class={`sw sw-${c.key}`}></span>
+        </button>
+      ))}
+    </div>
+    <div class="hl-actions">
+      <button id="hl-eraser" class="hl-tool" data-tool="eraser" title="Eraser — click a highlight to remove it">⌫ Erase</button>
+      <button id="hl-clear" class="hl-tool" data-tool="clear" title="Remove all highlights on this page">🗑 Clear</button>
+    </div>
+    <p id="hl-hint" class="hl-hint" aria-live="polite"></p>
+  </div>
+  <button id="hl-fab" class="hl-fab" title="Highlighter" aria-label="Highlighter" aria-expanded="false" aria-pressed="false">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m9 11-6 6v3h3l6-6"></path>
+      <path d="m15 5 4 4"></path>
+      <path d="M14 4 20 10 16.5 13.5 10.5 7.5z"></path>
+    </svg>
+    <span id="hl-count" class="hl-count" aria-hidden="true">0</span>
+  </button>
+</div>
+
+<style is:global>
+  /* Highlight marks — translucent so text stays readable in both themes. */
+  mark.hl { background: transparent; color: inherit; border-radius: 2px; padding: 0 1px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  mark.hl-yellow { background: rgba(250, 204, 21, 0.45); }
+  mark.hl-green { background: rgba(34, 197, 94, 0.38); }
+  mark.hl-pink { background: rgba(236, 72, 153, 0.35); }
+  mark.hl-blue { background: rgba(56, 189, 248, 0.38); }
+  html.dark mark.hl-yellow { background: rgba(250, 204, 21, 0.32); }
+  html.dark mark.hl-green { background: rgba(34, 197, 94, 0.30); }
+  html.dark mark.hl-pink { background: rgba(236, 72, 153, 0.32); }
+  html.dark mark.hl-blue { background: rgba(56, 189, 248, 0.30); }
+  body.hl-erasing mark.hl { cursor: pointer; outline: 1px dashed currentColor; outline-offset: 1px; }
+</style>
+
+<style>
+  .hl-toolbar { position: fixed; right: 1rem; bottom: 1rem; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; }
+  .hl-fab {
+    width: 3rem; height: 3rem; border-radius: 50%; border: 1px solid var(--border);
+    background: var(--bg-elevated); color: var(--text); box-shadow: var(--shadow);
+    cursor: pointer; display: grid; place-items: center; position: relative; transition: transform 0.1s, background 0.15s, color 0.15s;
+  }
+  .hl-fab:hover { transform: translateY(-2px); }
+  .hl-toolbar.armed .hl-fab { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); }
+  .hl-count {
+    position: absolute; top: -4px; right: -4px; min-width: 1.05rem; height: 1.05rem; padding: 0 3px;
+    border-radius: 999px; background: var(--accent); color: #fff; font-size: 0.66rem; font-weight: 800;
+    display: grid; place-items: center; line-height: 1;
+  }
+  .hl-toolbar.armed .hl-count { background: var(--bg-elevated); color: var(--accent); }
+
+  .hl-menu {
+    background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 0.8rem; width: 15rem;
+  }
+  .hl-menu-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint); }
+  .hl-swatches { display: flex; gap: 0.5rem; margin: 0.6rem 0; }
+  .hl-color { flex: 1; border: 1px solid var(--border); background: var(--bg-soft); border-radius: 8px; padding: 0.4rem; cursor: pointer; display: grid; place-items: center; }
+  .hl-color:hover { border-color: var(--accent); }
+  .hl-color.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+  .sw { width: 100%; height: 1.1rem; border-radius: 4px; display: block; }
+  .sw-yellow { background: rgba(250, 204, 21, 0.7); }
+  .sw-green { background: rgba(34, 197, 94, 0.6); }
+  .sw-pink { background: rgba(236, 72, 153, 0.6); }
+  .sw-blue { background: rgba(56, 189, 248, 0.6); }
+  .hl-actions { display: flex; gap: 0.4rem; }
+  .hl-tool { flex: 1; font: inherit; font-size: 0.78rem; font-weight: 600; padding: 0.35rem; border-radius: 7px; border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-soft); cursor: pointer; }
+  .hl-tool:hover { background: var(--bg-soft); color: var(--text); }
+  .hl-tool.sel { border-color: var(--accent); color: var(--accent); }
+  .hl-hint { font-size: 0.74rem; color: var(--text-faint); margin: 0.5rem 0 0; min-height: 1rem; }
+
+  @media print { .hl-toolbar { display: none; } }
+</style>
+
+<script>
+  import { setupHighlighter } from '../scripts/highlighter.ts';
+  setupHighlighter();
+</script>
