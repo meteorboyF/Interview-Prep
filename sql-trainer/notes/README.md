@@ -15,6 +15,6 @@ practice questions → challenge problem.
 | # | Chapter | Status |
 |---|---------|--------|
 | 1 | [Core Querying](01-core-querying.md) — SELECT, WHERE, ORDER BY, LIMIT, DISTINCT, NULL logic, operators | ✅ |
-| 2 | Aggregation & Joins — GROUP BY/HAVING, all join types, IN vs EXISTS, UNION | planned |
+| 2 | [Aggregation & Joins](02-aggregation-and-joins.md) — GROUP BY/HAVING, all join types, IN vs EXISTS, UNION | ✅ |
 | 3 | Subqueries, CTEs & Window Functions | planned |
 | 4 | DDL, Keys, Transactions & Indexing | planned |
