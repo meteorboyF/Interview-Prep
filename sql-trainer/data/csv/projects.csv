@@ -1,0 +1,21 @@
+project_id,project_name,department_id,start_date,end_date,budget,status
+1,Customer Portal Revamp,4,2025-04-14,2025-07-09,740063.13,In Progress
+2,Payroll System Migration,8,2023-09-08,2024-05-25,253299.39,In Progress
+3,Q3 Marketing Campaign,1,2024-07-23,2025-06-28,325982.75,Planned
+4,Sales CRM Integration,8,2026-02-20,2026-10-16,611017.06,Planned
+5,Data Warehouse Build-out,2,2024-09-30,2025-08-26,586868.59,In Progress
+6,Employee Wellness Initiative,4,2026-02-23,2027-01-29,327142.51,In Progress
+7,Mobile App Launch,6,2023-03-30,2024-03-21,695367.24,Completed
+8,Cloud Infrastructure Upgrade,5,2023-05-02,2024-02-20,530614.51,In Progress
+9,Compliance Audit 2026,8,2025-06-04,2026-04-07,247043.62,In Progress
+10,Regional Expansion - Chattogram,4,2024-01-12,2024-07-01,647399.59,In Progress
+11,Vendor Contract Renewal,1,2024-06-04,2025-02-04,586246.86,Completed
+12,Brand Refresh,3,2023-10-19,2024-06-27,761310.56,Planned
+13,AI Chatbot Support Tool,3,2024-08-07,2024-11-03,94917.23,Planned
+14,Annual Recruitment Drive,3,2024-06-17,2024-09-11,111530.54,In Progress
+15,Cost Optimization Program,10,2023-03-26,2024-01-02,776387.04,Planned
+16,Product Line Extension,4,2025-03-13,2025-05-29,112665.98,Planned
+17,Internal Tools Modernization,8,2025-05-15,2025-12-15,556627.6,In Progress
+18,Security Hardening Project,7,2024-03-16,2025-04-17,89896.7,Planned
+19,Diversity & Inclusion Program,7,2025-05-11,2025-11-27,513220.14,Planned
+20,Customer Churn Reduction,6,2025-09-15,2025-11-19,113600.3,Completed

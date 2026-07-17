@@ -1,0 +1,11 @@
+department_id,department_name,location_id,budget
+1,Engineering,1,320051.63
+2,Human Resources,3,1375480.9
+3,Sales,2,3735061.83
+4,Marketing,5,617306.4
+5,Finance,4,352556.86
+6,Customer Support,1,1249462.28
+7,Operations,5,3089689.9
+8,IT Infrastructure,5,1154420.72
+9,Legal,5,2213695.14
+10,Product Management,4,3028475.28

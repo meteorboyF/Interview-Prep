@@ -1,0 +1,6 @@
+node_modules/
+dist/
+public/hr_training.sqlite
+public/hr_training.meta.json
+*.log
+.DS_Store

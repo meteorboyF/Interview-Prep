@@ -10,6 +10,8 @@ const nav = [
   { href: withBase('/visualize'), label: 'Visualizers' },
   { href: withBase('/complexity'), label: 'Complexity' },
   { href: withBase('/questions'), label: 'Flashcards' },
+  // Standalone Svelte app built by sql-trainer/, merged into dist/ at deploy time.
+  { href: withBase('/sql-trainer/'), label: 'SQL Trainer' },
 ];
 const isActive = (href: string) => {
   const h = href.replace(/\/$/, '');

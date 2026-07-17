@@ -30,11 +30,26 @@ animated algorithm visualizers**.
 - [Pagefind](https://pagefind.app) client-side full-text search
 - Deployed to GitHub Pages via GitHub Actions
 
+## HR SQL Trainer (`sql-trainer/`)
+
+An interactive DBMS & SQL course that runs **real SQL in the browser** (SQLite via
+sql.js/WebAssembly) against the supplied canonical HR training dataset (~25,000 rows,
+ten related tables). 26 lessons across 13 categories — SELECT basics, NULL logic,
+joins, subqueries, recursive CTEs, window functions, DML/DDL, transactions,
+simulated concurrency, and `EXPLAIN`-based index lessons — plus a schema explorer
+and a fully resettable sandbox.
+
+**Live:** https://meteorboyf.github.io/Interview-Prep/sql-trainer/ (also in the site nav).
+It is an independent Vite + Svelte app: see [sql-trainer/README.md](sql-trainer/README.md).
+The deploy workflow builds it (dataset validation + 99 lesson-example tests must pass)
+and merges its output into `dist/sql-trainer/`.
+
 ## Project structure
 
 ```
 DSA 1/ , DSA 2/ , DBMS/    # source notes and supplied DBMS reference documents
 scripts/ingest.mjs         # parses notes -> clean content + JSON data
+sql-trainer/               # HR SQL Trainer app (own package.json; deployed under /sql-trainer/)
 src/
   content/topics/          # generated DSA + DBMS topic markdown (rebuilt on build)
   data/generated/          # generated JSON: topics, questions, complexity (gitignored)

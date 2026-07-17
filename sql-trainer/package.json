@@ -1,0 +1,28 @@
+{
+  "name": "hr-sql-trainer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Interactive DBMS & SQL learning app built on the canonical HR training dataset (runs SQLite in the browser via sql.js).",
+  "scripts": {
+    "dev": "npm run build:db -- --skip-if-fresh && vite",
+    "build": "npm run build:db && npm run test:lessons && vite build",
+    "preview": "vite preview",
+    "build:db": "node scripts/build-db.mjs",
+    "validate:db": "node scripts/validate-db.mjs",
+    "test:lessons": "node scripts/test-lessons.mjs",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "dependencies": {
+    "sql.js": "^1.13.0"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "@tsconfig/svelte": "^5.0.4",
+    "@types/sql.js": "^1.4.9",
+    "svelte": "^5.0.0",
+    "svelte-check": "^4.1.0",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0"
+  }
+}

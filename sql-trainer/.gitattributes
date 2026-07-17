@@ -1,0 +1,5 @@
+# The supplied HR training dataset is canonical — store it byte-exact,
+# exempt from the repo-wide LF normalization.
+data/** -text
+hr_training_dataset.sql -text
+hr_dataset_csv_files.zip binary

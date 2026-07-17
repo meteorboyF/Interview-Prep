@@ -1,0 +1,21 @@
+job_id,job_title,job_grade,min_salary,max_salary
+1,Software Engineer,G4,60000,110000
+2,Senior Software Engineer,G5,100000,150000
+3,Engineering Manager,G7,130000,180000
+4,HR Specialist,G3,45000,75000
+5,HR Manager,G6,90000,130000
+6,Sales Executive,G3,40000,80000
+7,Sales Manager,G6,95000,140000
+8,Marketing Analyst,G3,45000,75000
+9,Marketing Manager,G6,90000,130000
+10,Financial Analyst,G4,55000,90000
+11,Finance Manager,G7,110000,160000
+12,Customer Support Rep,G2,32000,55000
+13,Support Team Lead,G4,55000,85000
+14,IT Systems Admin,G4,55000,90000
+15,Legal Counsel,G6,100000,150000
+16,Product Manager,G6,95000,140000
+17,VP of Engineering,G9,180000,260000
+18,VP of Sales,G9,180000,260000
+19,Chief Executive Officer,G10,250000,400000
+20,Recruiter,G3,42000,70000

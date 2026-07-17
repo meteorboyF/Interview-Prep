@@ -42,6 +42,21 @@ jobs:
       - name: Build site
         run: npm run build
 
+      # HR SQL Trainer (sql-trainer/): builds the browser SQLite DB from the
+      # canonical CSVs, runs all lesson-example tests, then the Vite build.
+      - name: Install SQL Trainer dependencies
+        run: npm ci
+        working-directory: sql-trainer
+
+      - name: Build SQL Trainer
+        run: npm run build
+        working-directory: sql-trainer
+        env:
+          BASE_PATH: /Interview-Prep/sql-trainer/
+
+      - name: Merge SQL Trainer into site output
+        run: cp -r sql-trainer/dist dist/sql-trainer
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
