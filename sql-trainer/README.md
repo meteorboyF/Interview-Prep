@@ -7,6 +7,10 @@ engine** (sql.js / WebAssembly) inside a Svelte 5 app.
 
 The original dataset documentation is preserved unchanged at [data/README.md](data/README.md).
 
+**Study notes:** [notes/](notes/README.md) — deep, engineer-thinking study chapters
+(definition → when/when-not → comparisons → decision trees → interview & exam notes → verified
+practice questions), all example results executed against this exact dataset.
+
 ## Quick start
 
 ```bash
