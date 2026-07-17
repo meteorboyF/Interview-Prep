@@ -16,5 +16,5 @@ practice questions → challenge problem.
 |---|---------|--------|
 | 1 | [Core Querying](01-core-querying.md) — SELECT, WHERE, ORDER BY, LIMIT, DISTINCT, NULL logic, operators | ✅ |
 | 2 | [Aggregation & Joins](02-aggregation-and-joins.md) — GROUP BY/HAVING, all join types, IN vs EXISTS, UNION | ✅ |
-| 3 | Subqueries, CTEs & Window Functions | planned |
+| 3 | [Subqueries, CTEs & Window Functions](03-subqueries-ctes-windows.md) — correlated subqueries, recursive org-chart CTEs, RANK/DENSE_RANK/ROW_NUMBER, LAG/LEAD, running totals | ✅ |
 | 4 | DDL, Keys, Transactions & Indexing | planned |
