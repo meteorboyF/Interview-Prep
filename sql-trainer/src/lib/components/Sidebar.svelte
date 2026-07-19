@@ -7,9 +7,16 @@
   function toggle(id: string) {
     open[id] = !open[id];
   }
+
+  // The trainer is deployed under <site>/sql-trainer/ (BASE_URL). Strip the
+  // trailing segment to link back to the main Interview Prep site. In local
+  // dev BASE_URL is '/', so this harmlessly points at the trainer root.
+  const siteHome = import.meta.env.BASE_URL.replace(/sql-trainer\/?$/, '') || '/';
 </script>
 
 <nav class="sidebar">
+  <a class="site-back" href={siteHome}>← Interview Prep</a>
+
   <div class="brand">
     <span class="logo">HR</span>
     <div>
@@ -65,6 +72,20 @@
     gap: 0.15rem;
     position: sticky;
     top: 0;
+  }
+  .site-back {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.6rem;
+    margin-bottom: 0.3rem;
+    border-radius: 7px;
+  }
+  .site-back:hover {
+    background: var(--panel-2);
+    color: var(--accent);
   }
   .brand {
     display: flex;
