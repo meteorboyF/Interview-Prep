@@ -84,13 +84,13 @@ export const transactions: LessonCategory = {
             title: 'Non-repeatable read — same row, two answers (READ COMMITTED)',
             steps: [
               { session: 'A', text: 'BEGIN;' },
-              { session: 'A', text: 'SELECT salary FROM employees WHERE employee_id = 42;  → 61088.57' },
-              { session: 'B', text: 'UPDATE employees SET salary = 70000 WHERE employee_id = 42; COMMIT;', highlight: 'ok' },
-              { session: 'A', text: 'SELECT salary FROM employees WHERE employee_id = 42;  → 70000', highlight: 'problem' },
+              { session: 'A', text: 'SELECT salary FROM employees WHERE employee_id = 42;  → 69010.74' },
+              { session: 'B', text: 'UPDATE employees SET salary = 75000 WHERE employee_id = 42; COMMIT;', highlight: 'ok' },
+              { session: 'A', text: 'SELECT salary FROM employees WHERE employee_id = 42;  → 75000', highlight: 'problem' },
               { session: 'DB', text: 'Same query, same transaction, different result.' }
             ],
             outcome: 'A read the row twice inside one transaction and got different values — a non-repeatable read.',
-            prevention: 'REPEATABLE READ (InnoDB default) gives A a consistent snapshot: both reads return 61088.57.'
+            prevention: 'REPEATABLE READ (InnoDB default) gives A a consistent snapshot: both reads return 69010.74.'
           }
         },
         {
@@ -98,9 +98,9 @@ export const transactions: LessonCategory = {
           concurrency: {
             title: 'Phantom read — new rows appear between identical queries',
             steps: [
-              { session: 'A', text: "BEGIN; SELECT COUNT(*) FROM leave_requests WHERE status = 'Pending';  → 240" },
+              { session: 'A', text: "BEGIN; SELECT COUNT(*) FROM leave_requests WHERE status = 'Pending';  → 177" },
               { session: 'B', text: "INSERT INTO leave_requests (…) VALUES (…, 'Pending'); COMMIT;", highlight: 'ok' },
-              { session: 'A', text: "SELECT COUNT(*) FROM leave_requests WHERE status = 'Pending';  → 241", highlight: 'problem' },
+              { session: 'A', text: "SELECT COUNT(*) FROM leave_requests WHERE status = 'Pending';  → 178", highlight: 'problem' },
               { session: 'DB', text: 'A row that matches the WHERE clause materialized mid-transaction — a phantom.' }
             ],
             outcome: 'The set of matching rows changed between two identical queries in one transaction.',
@@ -112,11 +112,11 @@ export const transactions: LessonCategory = {
           concurrency: {
             title: 'Lost update — two admins raise the same salary',
             steps: [
-              { session: 'A', text: 'SELECT salary FROM employees WHERE employee_id = 42;  → 61088.57' },
-              { session: 'B', text: 'SELECT salary FROM employees WHERE employee_id = 42;  → 61088.57' },
-              { session: 'A', text: 'UPDATE employees SET salary = 61088.57 + 5000 WHERE employee_id = 42; COMMIT;' },
-              { session: 'B', text: 'UPDATE employees SET salary = 61088.57 + 3000 WHERE employee_id = 42; COMMIT;', highlight: 'problem' },
-              { session: 'DB', text: 'Final salary: 64088.57 — the 5000 raise is silently gone.' }
+              { session: 'A', text: 'SELECT salary FROM employees WHERE employee_id = 42;  → 69010.74' },
+              { session: 'B', text: 'SELECT salary FROM employees WHERE employee_id = 42;  → 69010.74' },
+              { session: 'A', text: 'UPDATE employees SET salary = 69010.74 + 5000 WHERE employee_id = 42; COMMIT;' },
+              { session: 'B', text: 'UPDATE employees SET salary = 69010.74 + 3000 WHERE employee_id = 42; COMMIT;', highlight: 'problem' },
+              { session: 'DB', text: 'Final salary: 72010.74 — the 5000 raise is silently gone.' }
             ],
             outcome: "B's write, computed from a stale read, overwrote A's raise. No error was raised anywhere.",
             prevention: 'Atomic updates (SET salary = salary + 5000), SELECT … FOR UPDATE row locks, or optimistic version checks.'
