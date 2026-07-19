@@ -44,6 +44,17 @@ const electronics = topics.filter((t) => t.course === 'Electronics').sort((a, b)
               {t.viz.length > 0 && <span class="viz-pill">▶ {t.viz.length}</span>}
             </a>
           ))}
+          {group.label.startsWith('DBMS') && (
+            <a class="card topic-row trainer-row" href={withBase('/sql-trainer/')}>
+              <span class="launch" aria-hidden="true">▶</span>
+              <span class="topic-num">SQL</span>
+              <span class="topic-body">
+                <span class="topic-title">HR SQL Trainer</span>
+                <span class="topic-summary">Interactive — run real SQL in the browser against the HR dataset: 26 lessons, schema explorer and sandbox.</span>
+              </span>
+              <span class="viz-pill live">Interactive</span>
+            </a>
+          )}
         </div>
       </section>
     ))}
@@ -79,6 +90,13 @@ const electronics = topics.filter((t) => t.course === 'Electronics').sort((a, b)
   .topic-title { font-weight: 700; }
   .topic-summary { color: var(--text-soft); font-size: 0.88rem; }
   .viz-pill { font-size: 0.75rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 0.2rem 0.55rem; border-radius: 999px; }
+  .trainer-row { border-color: var(--accent); background: linear-gradient(100deg, var(--accent-soft), transparent 45%); }
+  .trainer-row:hover { border-color: var(--accent); }
+  .launch {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff;
+    flex-shrink: 0; display: grid; place-items: center; font-size: 0.7rem;
+  }
+  .viz-pill.live { color: #fff; background: var(--accent); }
 </style>
 
 <script>

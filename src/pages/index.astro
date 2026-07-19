@@ -73,6 +73,17 @@ const highlights = [
       <span class="course-badge dbms">DBMS</span>
     </div>
     <div class="topic-grid">
+      <a class="card topic-card trainer-card" href={withBase('/sql-trainer/')}>
+        <div class="topic-card-top">
+          <span class="topic-num">SQL</span>
+          <span class="viz-pill live">▶ Interactive</span>
+        </div>
+        <h3>HR SQL Trainer</h3>
+        <p>Run real SQL in your browser against the canonical HR dataset — 26 lessons
+          across joins, subqueries, CTEs, windows, transactions and indexing, plus a
+          schema explorer and a resettable sandbox.</p>
+        <span class="trainer-cta">Open the trainer →</span>
+      </a>
       {dbms.map((t) => (
         <a class="card topic-card" href={withBase(`/topics/${t.slug}`)}>
           <div class="topic-card-top">
@@ -207,6 +218,17 @@ const highlights = [
   }
   .topic-card h3 { margin: 0.6rem 0 0.4rem; font-size: 1.15rem; }
   .topic-card p { margin: 0; color: var(--text-soft); font-size: 0.92rem; }
+
+  .trainer-card {
+    border-color: var(--accent);
+    background: linear-gradient(160deg, var(--accent-soft), transparent 60%);
+  }
+  .trainer-card:hover { border-color: var(--accent); }
+  .viz-pill.live { color: #fff; background: var(--accent); }
+  .trainer-cta {
+    display: inline-block; margin-top: 0.8rem;
+    font-size: 0.85rem; font-weight: 700; color: var(--accent);
+  }
 
   .whats-inside { margin-top: 3rem; }
   .inside-card { padding: 1.6rem 1.8rem; }
